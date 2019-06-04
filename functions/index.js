@@ -16,9 +16,12 @@
 
 'use strict';
 
+const {google} = require('googleapis');
 const functions = require('firebase-functions');
 const {WebhookClient} = require('dialogflow-fulfillment');
 const {Card, Suggestion} = require('dialogflow-fulfillment');
+const {dialogflow, BasicCard, SimpleResponse} = require('actions-on-google');
+const admin = require('firebase-admin');
 
 process.env.DEBUG = 'dialogflow:debug'; // enables lib debugging statements
 
@@ -28,7 +31,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
 
   function welcome (agent) {
-    agent.add(`Welcome to my agent!`);
+    agent.add(`Welcome to my agent 2!`);
   }
 
   function fallback (agent) {
@@ -57,17 +60,21 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   // // Uncomment and edit to make your own Google Assistant intent handler
   // // uncomment `intentMap.set('your intent name here', googleAssistantHandler);`
   // // below to get this function to be run when a Dialogflow intent is matched
-  // function googleAssistantHandler(agent) {
-  //   let conv = agent.conv(); // Get Actions on Google library conv instance
-  //   conv.ask('Hello from the Actions on Google client library!'); // Use Actions on Google library
-  //   agent.add(conv); // Add Actions on Google library responses to your agent's response
-  // }
+  function googleAssistantHandler(agent) {
+    console.log('Entró a Catalog');
+    let conv = agent.conv(); // Get Actions on Google library conv instance
+    conv.ask(new SimpleResponse({
+      text: 'Hello from the Actions on Google client library!',
+      speech: 'Hey, this is a simple response, okay?',
+      })); // Use Actions on Google library
+    agent.add(conv); // Add Actions on Google library responses to your agent's response
+    }
 
   // Run the proper function handler based on the matched Dialogflow intent name
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
   // intentMap.set('<INTENT_NAME_HERE>', yourFunctionHandler);
-  // intentMap.set('<INTENT_NAME_HERE>', googleAssistantHandler);
+  intentMap.set('Catalog', googleAssistantHandler);
   agent.handleRequest(intentMap);
 });
