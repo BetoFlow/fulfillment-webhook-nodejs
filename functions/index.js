@@ -75,7 +75,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 	return dialogflowAgentDoc.get()
 		.then(doc => {
 			if (!doc.exists) {
-			  agent.add('No tengo datos de la comida solicitada, ¿te puedo ayudar con algo más?');
+			  agent.add('Lo siento, en este momento, no tengo datos sobre el producto solicitado, ¿te puedo ayudar con otra cosa?');
 			} 
 			else {
 				//agent.add(doc.data().composition_speech);
@@ -99,7 +99,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 			return Promise.resolve('Read complete');
 		})
 		.catch(() => {
-			agent.add('Hubo un error intentando leer la base de datos');
+			agent.add('Lo siento, en este momento, no tengo esa información, ¿te puedo ayudar con otra cosa?');
 		});
 	}
 	
@@ -112,7 +112,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 		return dialogflowAgentDoc.get()
 			.then(doc => {
 				if (!doc.exists) {
-				  agent.add('No tengo datos de la comida solicitada, ¿te puedo ayudar con algo más?');
+				  agent.add('Lo siento, en este momento, no tengo datos sobre el producto solicitado, ¿te puedo ayudar con otra cosa?');
 				} 
 				else {
 					//agent.add(doc.data().composition_speech);
@@ -136,7 +136,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 				return Promise.resolve('Read complete');
 			})
 			.catch(() => {
-				agent.add('Hubo un error intentando leer la base de datos');
+				agent.add('Lo siento, en este momento, no tengo esa información, ¿te puedo ayudar con otra cosa?');
 			});
 	}
 	
@@ -151,7 +151,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 		return dialogflowAgentDoc.where('disease_speech', '==', bugs).where('crops', '==', Sowing).get()
 			.then(snapshot => {
 				if (!snapshot.docs[0].exists) {
-				  agent.add('No tengo datos de la info solicitada, ¿te puedo ayudar con algo más?');
+				  agent.add('Lo siento, en este momento, no tengo esa información, ¿te puedo ayudar con otra cosa?');
 				} 
 				else {                  
                     let conv = agent.conv();
@@ -164,7 +164,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 				//return Promise.resolve('Read complete');
 			})
 			.catch(() => {
-				agent.add('Hubo un error intentando leer la base de datos');
+				agent.add('Lo siento, en este momento, no tengo esa información, ¿te puedo ayudar con otra cosa?');
 			});
 	}	
   
